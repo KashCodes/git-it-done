@@ -29,7 +29,7 @@ var getUserRepos = function(user) {
         displayRepos(data, user);
       });
 
-      // if the 'response' is an invalid username the following alert/error message will display.
+      // if the 'response' is an invalid/false username the following alert/error message will display.
     } else {
             /* 'alert' window will show "Error: " and status of the response   */
       alert("Error: " + response.statusText);
@@ -97,6 +97,16 @@ var displayRepos = function(repos, searchTerm) {
             /* If there are 0 open issues it will instead show the following class icon's.   */
     statusEl.innerHTML = "<i class='fas fa-check-square status-icon icon-success'></i>";
   }
+
+
+  // if loop to check if api returned any repos. If no repo's are found it will state that.
+            /* If the repo length/count IS equal to 0, then the following '.textContent' property will display "no repositories found."   */
+  if (repos.length === 0) {
+    repoContainerEl.textContent = "No repositories found.";
+    // return runs/calls this if loop and stops it from repeating/looping itself.
+    return;
+  }
+
 
   // append to container - Puts the <span> title inside each <div> container created.
   repoEl.appendChild(titleEl);

@@ -1,3 +1,17 @@
+// GLOBAL VARIABLES //
+// Variables to store and reference the form submissions.
+        /*  The variables reference the 'id' values from the <input> feilds in the form. w/ these variables all entries will be captured for future reference */
+// references the form
+var userFormEl = document.querySelector("#user-form");
+// references the input/values from the form
+var nameInputEl = document.querySelector("#username");
+
+// Variable to display all the results pulled from the search in an empty <div> in the HTML
+var repoContainerEl = document.querySelector("#repos-container");
+// Variable to write the search term used we pulled from the search to an empty <span> element in the HTML
+var repoSearchTerm = document.querySelector("#repo-search-term");
+
+
 var getUserRepos = function(user) {
   // format the github api url
   var apiUrl = "https://api.github.com/users/" + user + "/repos";
@@ -12,11 +26,6 @@ var getUserRepos = function(user) {
     });
   });
 };
-
-// Variables to store and reference the form submissions.
-        /*  The variables reference the 'id' values from the <input> feilds in the form. w/ these variables all entries will be captured for future reference */
-var userFormEl = document.querySelector("#user-form");
-var nameInputEl = document.querySelector("#username");
 
 // function created to we're grabbing a GitHub username. It will execute the event upon form submission by the global event listener.
 var formSubmitHandler = function(event) {
@@ -41,6 +50,11 @@ var formSubmitHandler = function(event) {
 
 // This function will accept the array of the repository data and the term we searched for as parameters.
 var displayRepos = function(repos, searchTerm) {
+  // clear old content before running new search.
+  repoContainerEl.textContent = "";
+  repoSearchTerm.textContent = searchTerm;
+
+
   console.log(repos);
   console.log(searchTerm);
 };

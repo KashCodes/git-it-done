@@ -12,6 +12,26 @@ var repoContainerEl = document.querySelector("#repos-container");
 var repoSearchTerm = document.querySelector("#repo-search-term");
 
 
+// function created to we're grabbing a GitHub username. It will execute the event upon form submission by the global event listener.
+var formSubmitHandler = function(event) {
+  // This stops the browser from performing the default action the event wants to do. 
+            /* In this case it prevents the browser from sending the forms input data to a URL. We will handle what happens witht he form input data ourselves in Javascript. */
+  event.preventDefault();
+  // get value from input element
+            /* This creates a local variable 'username' that = the global variable 'nameInputEl', then uses the '.value' property to return the value from the 'nameInputEl' form submission. The form submission returns as a string where we use the '.trim' method to remove whitespace from both sides of it.   */
+  var username = nameInputEl.value.trim();
+
+  // if loop ensures the 'nameInputEl' isn't blank. If it is an alert will display instructing the user to enter a GitHub username.
+            /* This argument takes the 'username' and passes it through it's own argument 'getUserRepos' to ensure the value isn't blank.  */
+  if (username) {
+    getUserRepos(username);
+    nameInputEl.value = "";
+  } else {
+    alert("Please enter a GitHub username");
+  }
+};
+
+// function to fetch user repos from the GitHub API using Fetch API 'promises'.
 var getUserRepos = function(user) {
   // format the github api url
   var apiUrl = "https://api.github.com/users/" + user + "/repos";
@@ -41,26 +61,6 @@ var getUserRepos = function(user) {
     // Notice this `.catch()` getting chained onto the end of the `.then()` method
     alert("Unable to connect to GitHub");
   });
-};
-
-// function created to we're grabbing a GitHub username. It will execute the event upon form submission by the global event listener.
-var formSubmitHandler = function(event) {
-  // This stops the browser from performing the default action the event wants to do. 
-            /* In this case it prevents the browser from sending the forms input data to a URL. We will handle what happens witht he form input data ourselves in Javascript. */
-  event.preventDefault();
-  // get value from input element
-            /* This creates a local variable 'username' that = the global variable 'nameInputEl', then uses the '.value' property to return the value from the 'nameInputEl' form submission. The form submission returns as a string where we use the '.trim' method to remove whitespace from both sides of it.   */
-  var username = nameInputEl.value.trim();
-
-  // if loop ensures the 'nameInputEl' isn't blank. If it is an alert will display instructing the user to enter a GitHub username.
-            /* This argument takes the 'username' and passes it through it's own argument 'getUserRepos' to ensure the value isn't blank.  */
-  if (username) {
-    getUserRepos(username);
-    nameInputEl.value = "";
-  } else {
-    alert("Please enter a GitHub username");
-  }
-  console.log(event);
 };
 
 
@@ -124,8 +124,6 @@ var displayRepos = function(repos, searchTerm) {
   repoContainerEl.appendChild(repoEl);
 }
 
-  console.log(repos);
-  console.log(searchTerm);
 };
 
 

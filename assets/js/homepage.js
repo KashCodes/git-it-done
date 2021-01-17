@@ -48,7 +48,7 @@ var formSubmitHandler = function(event) {
 };
 
 
-// This function will accept the array of the repository data and the term we searched for as parameters.
+// This function will accept the array of the repository data and the term we searched for as parameters and display it in the HTML with proper titles.
 var displayRepos = function(repos, searchTerm) {
   // clear old content before running new search.
   repoContainerEl.textContent = "";
@@ -71,8 +71,28 @@ var displayRepos = function(repos, searchTerm) {
   // each 'repoEl' <div> container will display the 'repoName' variable created above in the initial for loop using the '.textContent' property to set the Repo name as a title. 
   titleEl.textContent = repoName;
 
+  // create a status element to show how many issues each repo has in GitHub
+  // creates new variable 'statusEl' that creates a <span> element.
+  var statusEl = document.createElement("span");
+  // assigns this new <span> element with the following classes using the '.classList' attribute.
+  statusEl.classList = "flex-row align-center";
+
+  // if loop to check if current repo has issues or not
+       /* for each repo the first if loop pulls 'repos[i]', it will check and see if the '.open_issues_count' property is greater than 0.   */
+  if (repos[i].open_issues_count > 0) {
+        /* if the repo has open issues it will edit the '.innerHTML' of the 'statusEl' <span> with the following icon class settings. It will also display the total count of the open " issue(s)"   */
+    statusEl.innerHTML =
+      "<i class='fas fa-times status-icon icon-danger'></i>" + repos[i].open_issues_count + " issue(s)";
+  } else {
+        /* If there are 0 open issues it will instead show the following class icon's.   */
+    statusEl.innerHTML = "<i class='fas fa-check-square status-icon icon-success'></i>";
+  }
+
   // append to container - Puts the <span> title inside each <div> container created.
   repoEl.appendChild(titleEl);
+
+  // appends the status count and/or icon <span> to the 'repoEl' <div> container.
+  repoEl.appendChild(statusEl);
 
   // appends the full <div> container to the dom
   repoContainerEl.appendChild(repoEl);

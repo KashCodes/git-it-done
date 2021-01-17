@@ -16,7 +16,7 @@ var getUserRepos = function(user) {
   // format the github api url
   var apiUrl = "https://api.github.com/users/" + user + "/repos";
 
-  // make a request to the url
+  // make a request to the url using Fetch API
             /* 'fetch' is an HTTP request from the app, and response came from the requested server (GitHub's API). The 'fetch' returns an 'object' called a 'promise'. A 'promise' has a 'then()' function when it is fulfilled. This 'promise' is called twice in this function and has a '.then' for each 'promise'. First is used to pull the data and the second stores it. */
   fetch(apiUrl).then(function(response) {
 
@@ -34,6 +34,12 @@ var getUserRepos = function(user) {
             /* 'alert' window will show "Error: " and status of the response   */
       alert("Error: " + response.statusText);
     }
+  })
+
+  // '.catch()' is Fetch API's way of handling network errors. If the '.then()' method fails this will run and display the following alert message.
+  .catch(function(error) {
+    // Notice this `.catch()` getting chained onto the end of the `.then()` method
+    alert("Unable to connect to GitHub");
   });
 };
 
@@ -66,6 +72,14 @@ var displayRepos = function(repos, searchTerm) {
 
   // loop over repos using for loop as many times as the repos length is. Length is the number of repo's being pulled total. 
   for (var i = 0; i < repos.length; i++) {
+  // if loop to check if api returned any repos. If no repo's are found it will state that.
+            /* If the repo length/count IS equal to 0, then the following '.textContent' property will display "no repositories found."   */
+  if (repos.length === 0) {
+    repoContainerEl.textContent = "No repositories found.";
+    // return runs/calls this if loop and stops it from repeating/looping itself.
+    return;
+  }
+
   // format repo name
             /* for each loop in the repo it will display the owner/login name split with a "/" then the repos name. This will now be referred to as the 'repoName'. */
   var repoName = repos[i].owner.login + "/" + repos[i].name;
@@ -98,14 +112,6 @@ var displayRepos = function(repos, searchTerm) {
     statusEl.innerHTML = "<i class='fas fa-check-square status-icon icon-success'></i>";
   }
 
-
-  // if loop to check if api returned any repos. If no repo's are found it will state that.
-            /* If the repo length/count IS equal to 0, then the following '.textContent' property will display "no repositories found."   */
-  if (repos.length === 0) {
-    repoContainerEl.textContent = "No repositories found.";
-    // return runs/calls this if loop and stops it from repeating/looping itself.
-    return;
-  }
 
 
   // append to container - Puts the <span> title inside each <div> container created.

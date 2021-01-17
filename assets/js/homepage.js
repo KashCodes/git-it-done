@@ -54,6 +54,29 @@ var displayRepos = function(repos, searchTerm) {
   repoContainerEl.textContent = "";
   repoSearchTerm.textContent = searchTerm;
 
+  // loop over repos using for loop as many times as the repos length is. Length is the number of repo's being pulled total. 
+  for (var i = 0; i < repos.length; i++) {
+  // format repo name
+        /* for each loop in the repo it will display the owner/login name split with a "/" then the repos name. This will now be referred to as the 'repoName'. */
+  var repoName = repos[i].owner.login + "/" + repos[i].name;
+
+        /* The next few variables will be created for each 'repoName' created. i.e. Every repo assigned to the username.  */
+  // create a container for each repo in a <div> name this variable 'repoEl'
+  var repoEl = document.createElement("div");
+  // assign this new <div> element the following classes using '.classList' attribute.
+  repoEl.classList = "list-item flex-row justify-space-between align-center";
+
+  // create a <span> element to hold repository name in a variable called 'titleEl' inside each of the 'repoEl' <div> element.
+  var titleEl = document.createElement("span");
+  // each 'repoEl' <div> container will display the 'repoName' variable created above in the initial for loop using the '.textContent' property to set the Repo name as a title. 
+  titleEl.textContent = repoName;
+
+  // append to container - Puts the <span> title inside each <div> container created.
+  repoEl.appendChild(titleEl);
+
+  // appends the full <div> container to the dom
+  repoContainerEl.appendChild(repoEl);
+}
 
   console.log(repos);
   console.log(searchTerm);

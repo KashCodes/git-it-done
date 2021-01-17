@@ -37,7 +37,7 @@ var getUserRepos = function(user) {
   var apiUrl = "https://api.github.com/users/" + user + "/repos";
 
   // make a request to the url using Fetch API
-            /* 'fetch' is an HTTP request from the app, and the response comes from the requested server (GitHub's API). The 'fetch' returns an 'object' called a 'promise', this is pending until it is fulfilled with a 'then()'. This 'promise' is called twice in this function and has a '.then' for each call to the 'promise'. The first is used to pull the data and the second stores it. */
+            /* 'fetch' is an HTTP request from the app specified as 'apiUrl' above, and the response comes from the requested server (GitHub's API). The 'fetch' returns an 'object' called a 'promise', this is pending until it is fulfilled with a 'then()'. This 'promise' is called twice in this function and has a '.then' for each call to the 'promise'. The first is used to pull the data and the second stores it. */
   fetch(apiUrl).then(function(response) {
 
     // an if loop is created to ensure we have an error message displayed if the username that was searched doesn't exist. 

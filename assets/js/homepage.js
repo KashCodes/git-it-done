@@ -85,10 +85,12 @@ var displayRepos = function(repos, searchTerm) {
   var repoName = repos[i].owner.login + "/" + repos[i].name;
 
             /* The next few variables will be created for each 'repoName' created. i.e. Every repo assigned to the username.  */
-  // create a container for each repo in a <div> name this variable 'repoEl'
-  var repoEl = document.createElement("div");
-  // assign this new <div> element the following classes using '.classList' attribute.
+  // create a container for each repo in a <a> name this variable 'repoEl'
+  var repoEl = document.createElement("a");
+  // assign this new <a> element the following classes using '.classList' attribute.
   repoEl.classList = "list-item flex-row justify-space-between align-center";
+  // assign an 'href' attribute to link each 'repoEl' name. Link it to the 'sing-repo.html' that shows all the issues assigned to said repo. 
+  repoEl.setAttribute("href", "./single-repo.html");
 
   // create a <span> element to hold repository name in a variable called 'titleEl' inside each of the 'repoEl' <div> element.
   var titleEl = document.createElement("span");

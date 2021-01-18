@@ -89,8 +89,8 @@ var displayRepos = function(repos, searchTerm) {
   var repoEl = document.createElement("a");
   // assign this new <a> element the following classes using '.classList' attribute.
   repoEl.classList = "list-item flex-row justify-space-between align-center";
-  // assign an 'href' attribute to link each 'repoEl' name. Link it to the 'sing-repo.html' that shows all the issues assigned to said repo. 
-  repoEl.setAttribute("href", "./single-repo.html");
+  // assign an 'href' attribute to link each 'repoEl' name. Link it to the 'sing-repo.html' that shows all the issues assigned to said 'repoName'. We connect this using the '?repo=' + 'repoName' called a 'query parameter' through this URL/href.
+  repoEl.setAttribute("href", "./single-repo.html?repo=" + repoName);
 
   // create a <span> element to hold repository name in a variable called 'titleEl' inside each of the 'repoEl' <div> element.
   var titleEl = document.createElement("span");

@@ -19,11 +19,19 @@ var getRepoName = function() {
   // This variable will pull the repo name out of the 'queryString'. 
         /*  It will do so using the '.split()' method. Splitting the 'queryString' in two. Remember the 'queryString' looks something like '?repo=KashCodes/Code-Quiz'. It is going to just pull the user/repoName by splitting it at the "=". Then the value that it wants to call is the second element/section. Bc JS index starts at 0 we call '[1]'.   */
   var repoName = queryString.split("=")[1];
-  //this will trigger the 'getRepoIssues' function
-  getRepoIssues(repoName);
-  // this will append the header <span> to display the repoName.
-  repoNameEl.textContent = repoName;
-}
+  // if condition to check if the 'repoName' exists otherwise it will not trigger the remaining conditions.
+  if(repoName) {
+    // this will append the header <span> to display the repoName.
+    repoNameEl.textContent = repoName;
+    //this will trigger the 'getRepoIssues' function
+    getRepoIssues(repoName);
+  }
+  // if no 'repoName' exists it will redirect to the 'index.html' page. 
+  else {
+    // rather than use the '.search' we are using '.replace' to redirect the page back to the index page.
+    document.location.replace("./index.html");
+  }
+};
 
 // Function created to pull Repo Issues from GitHub API
 var getRepoIssues = function(repo) {
@@ -49,9 +57,9 @@ var getRepoIssues = function(repo) {
         }
       });
     }
-    // if the request wasn't ok/true/successful it will display this error msg. 
+    // if the request wasn't ok/true/successful it will redirect the page to the index page just like in the 'getRepoName' function.
     else {
-      alert("There was a problem with your request!");
+      document.location.replace("./index.html");
     }
   });
 };

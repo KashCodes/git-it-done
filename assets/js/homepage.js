@@ -40,12 +40,12 @@ var buttonClickHandler = function (event) {
   //Variable that grabs the event listener for button clicks, and uses '.getAttribute' to pull the attribute for the specific button that was clicked. 
   var language = event.target.getAttribute("data-language")
   
-  // if loop reacts if a language is found.
+  // if loop reacts if a 'language' was found.
   if (language) {
     //calls the 'getFeaturesRepos' function for the language defined.
     getFeaturedRepos(language);
   
-    // clear old content that might still be in the search repo feild.
+    // clears old content that might still be in the search repo feild.
     repoContainerEl.textContent = "";
   }
 

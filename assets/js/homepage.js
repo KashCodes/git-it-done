@@ -1,16 +1,19 @@
 // GLOBAL VARIABLES //
-// Variables to store and reference the form submissions.
+// Variables to store and reference the search form submissions.
             /*  The variables reference the 'id' values from the <input> feilds in the form. w/ these variables all entries will be captured for future reference */
 // references the form
 var userFormEl = document.querySelector("#user-form");
 // references the input/values from the form
 var nameInputEl = document.querySelector("#username");
 
+//variables to append info to HTML
 // Variable to display all the results pulled from the search in an empty <div> in the HTML
 var repoContainerEl = document.querySelector("#repos-container");
 // Variable to write the search term used we pulled from the search to an empty <span> element in the HTML
 var repoSearchTerm = document.querySelector("#repo-search-term");
 
+//Variable to listen for the language button clicks
+var languageButtonsEl = document.querySelector("#language-buttons")
 
 // function created to we're grabbing a GitHub username. It will execute the event upon form submission by the global event listener.
 var formSubmitHandler = function(event) {
@@ -30,6 +33,25 @@ var formSubmitHandler = function(event) {
     alert("Please enter a GitHub username");
   }
 };
+
+
+// Variable to handle language button clicks
+var buttonClickHandler = function (event) {
+  //Variable that grabs the event listener for button clicks, and uses '.getAttribute' to pull the attribute for the specific button that was clicked. 
+  var language = event.target.getAttribute("data-language")
+  
+  // if loop reacts if a language is found.
+  if (language) {
+    //calls the 'getFeaturesRepos' function for the language defined.
+    getFeaturedRepos(language);
+  
+    // clear old content that might still be in the search repo feild.
+    repoContainerEl.textContent = "";
+  }
+
+};
+
+
 
 // function to fetch user repos from the GitHub API using Fetch API 'promises'.
 var getUserRepos = function(user) {
@@ -152,6 +174,9 @@ var getFeaturedRepos = function(language) {
 };
 
 
+
+//Event listener for the language button clicks
+languageButtonsEl.addEventListener("click", buttonClickHandler);
 
 // Event listener for 'userFormEl' variable when the form is submit it will execute the 'formSubmitHandler' function.
 userFormEl.addEventListener("submit", formSubmitHandler);        

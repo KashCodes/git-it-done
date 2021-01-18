@@ -115,7 +115,6 @@ var displayRepos = function(repos, searchTerm) {
   }
 
 
-
   // append to container - Puts the <span> title inside each <div> container created.
   repoEl.appendChild(titleEl);
 
@@ -129,9 +128,28 @@ var displayRepos = function(repos, searchTerm) {
 };
 
 
+// function that accepts a language parameter, creates an API endpoint, and makes an HTTP request to that endpoind using 'fetch()'
+            /* in the 'apiUrl' variable below it uses different types of 'query parameters'. This is first done with a GitHub documentation specific one, '?q='. The q is referencing a string of qualifiers when it comes to GitHub API. Then we add the search 'keyword' which is '+ langauge'. This will eventually be filled in by a button click. We then add the '+is:featured" which is the qualifier that tells the API we only want repo's that feature the next type of search parameter. We seprate the search query parameters by using '&' symbol between each parameter in the URL. The final parameter is using the 'sort=' paramter which GitHub documentation gives us several options to choose from, but we will be using the 'sort=help-wanted-issues' parameter.   */ 
+            /*  To summerize, there are 3 query parameters in effect here. The first '?q=' that says go through all the string of qualifiers and search for the keyword 'languages'. Then we add a second qualifier using the '+isfeatured' parameter. Seperate this parameter and the keyword value for it with '&'. Finally, the keyword value is going to be a third specified parameter, narrowing it down even more by using a GitHub specific parameter called 'sort='. Then out of our GitHub options available for this 'sort' we chose 'sort=help-wanted-issues'  */
+var getFeaturedRepos = function(language) {
+  var apiUrl = "https://api.github.com/search/repositories?q=" + language + "+is:featured&sort=help-wanted-issues";
 
-
-
+  // Fetch is grabbing the 'apiUrl' pending object promise and fulfilling it with a '.then()' function. This intial call is the entire HTTP response and not the JSON.
+  fetch(apiUrl).then(function(response) {
+    // If the response is 'ok'/true it runs the next line.
+    if (response.ok) {
+      // We have to call the promise a 2nd time to store it using 'response'. This time we convert it using '.json()' method. This extracts the JSON from the response. Every promise is pending until we use the '.then()' function to fulfill it. Finally, this new JSON is stored as a callback function called 'data'.
+      response.json().then(function(data) {
+        // we call the 'displayRepos' function to display the 'data' property '.items'. The value we want to pull from the '.items' property is called 'language'.
+        displayRepos(data.items, language);
+      });
+    }
+    // if there is an issue with response being false then it will display the "Error: " with the status of the false response.  
+    else {
+      alert("Error: " + response.statusText);
+    }
+  });
+};
 
 
 

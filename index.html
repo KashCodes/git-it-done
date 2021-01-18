@@ -19,7 +19,7 @@
   </header>
 
 
-  <!-- Starter files included a style sheet that was very similar to bootstraps styles. It created a two column page layout -->
+  <!-- Starter files included a style sheet that are very similar to bootstraps styles. It created a two column page layout -->
   <main class="flex-row justify-space-between">
     <div class="col-12 col-md-4">
       <div class="card">
@@ -30,8 +30,16 @@
           <input name="username" id="username" type="text" autofocus="true" class="form-input" />
           <button type="submit" class="btn">Get User</button>
         </form>
+
+        <!-- This div will include search buttons for specific languages JS, HTML, and CSS -->
+        <div class="card">
+          <h3 class="card-header text-uppercase">Search by Topic:</h3>
+          <div class="cardbody" id="language-buttons"></div>
+        </div>
       </div>
     </div>
+
+
     
     <!-- the right main body column will contain all the search results -->
     <div class="col-12 col-md-8">

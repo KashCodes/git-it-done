@@ -4,6 +4,8 @@
 // GLOBAL VARIABLES // 
 // Variable to append the '#issue-container' <div>
 var issueContainerEl = document.querySelector("#issues-container");
+// Variable to append any pagination limitations to the '#limit-warning' <div>
+var limitWarningEl = document.querySelector("#limit-warning");
 
 // Function created to pull Repo Issues from GitHub API
 var getRepoIssues = function(repo) {
@@ -19,6 +21,14 @@ var getRepoIssues = function(repo) {
       response.json().then(function(data) {
         // pass response data to dom function that edits/appends the html with said data.
         displayIssues(data);
+
+        // check if api has paginated (display limit) issues
+                     /* GitHub documentation states it limits requests at 30. However, it will actually supply a link header with more information if pagination limits exists in our data request.   */
+        // if loop that takes 'promises' '.headers' property then uses the '.get()' request to check for the header labeled "Link" in the promise. 
+        if (response.headers.get("Link")) {
+          //triggers 'displayWarning' function that displays a link to the selected repo's GitHub Issues page to see the rest of the issues available outside of the paginated display limit.
+          displayWarning(repo);
+        }
       });
     }
     // if the request wasn't ok/true/successful it will display this error msg. 
@@ -75,12 +85,25 @@ var displayIssues = function(issues) {
     // this appendChild will go into effect for every issue found in the following for loop to the empty <div> in the HTML
     issueContainerEl.appendChild(issueEl);
   }
-
-  
-
 };
 
+// function created to display link if pagination limitations exist where it will only display a preset limit of data that is determined by the API.
+var displayWarning = function(repo) {
+  // add text to warning <div> container global variable reference
+  limitWarningEl.textContent = "To see more than 30 issues, visit ";
 
+  // in the same warning <div> container 'limitWarningEl' create a new variable 'linkEl' and create a new <a> element.
+  var linkEl = document.createElement("a");
+  //inside the new <a> tag display the following text
+  linkEl.textContent = "See More Issues on GitHub.com";
+  // make the above text a clickable link by assigning a 'href' attribute. The value/link will be a direct link to the selcted repo's GitHub issues page.
+  linkEl.setAttribute("href", "https://github.com/" + repo + "/issues");
+  // set another 'target' attribute to open it in a new tab w/ "_blank". This happens with any link with 'target="_blank"' then opens in new browser tab.
+  linkEl.setAttribute("target", "_blank");
+
+  // append to warning <div> container
+  limitWarningEl.appendChild(linkEl);
+};
 
 
 

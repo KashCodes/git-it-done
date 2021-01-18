@@ -2,10 +2,28 @@
 //-------------------------------------------// 
 
 // GLOBAL VARIABLES // 
-// Variable to append the '#issue-container' <div>
+// Variable to append the '#issue-container' <div> element.
 var issueContainerEl = document.querySelector("#issues-container");
-// Variable to append any pagination limitations to the '#limit-warning' <div>
+// Variable to append any pagination limitations to the '#limit-warning' <div> element.
 var limitWarningEl = document.querySelector("#limit-warning");
+// Variable to append the repo name to the header of the page to the '#repo-name' <span> element.
+var repoNameEl = document.querySelector("#repo-name");
+
+
+
+
+//function created to pull the Repo name from the index.html search. 
+var getRepoName = function() {
+  // This variable is designed to extract the 'query parameter' that was created by the pageload from the 'index.html'. It is grabbing the document URL/'.location' and pulling the query parameter/'.search'
+  var queryString = document.location.search;
+  // This variable will pull the repo name out of the 'queryString'. 
+        /*  It will do so using the '.split()' method. Splitting the 'queryString' in two. Remember the 'queryString' looks something like '?repo=KashCodes/Code-Quiz'. It is going to just pull the user/repoName by splitting it at the "=". Then the value that it wants to call is the second element/section. Bc JS index starts at 0 we call '[1]'.   */
+  var repoName = queryString.split("=")[1];
+  //this will trigger the 'getRepoIssues' function
+  getRepoIssues(repoName);
+  // this will append the header <span> to display the repoName.
+  repoNameEl.textContent = repoName;
+}
 
 // Function created to pull Repo Issues from GitHub API
 var getRepoIssues = function(repo) {
@@ -106,5 +124,4 @@ var displayWarning = function(repo) {
 };
 
 
-
-getRepoIssues("facebook/react");
+getRepoName();
